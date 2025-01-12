@@ -1,4 +1,4 @@
-// color design tokens export
+// color design tokens expor
 export const colorTokens = {
     grey: {
       0: "#FFFFFF",
