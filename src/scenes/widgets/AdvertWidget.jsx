@@ -19,13 +19,13 @@ const AdvertWidget = () => {
         width="100%"
         height="auto"
         alt="advert"
-      src="https://devix-backend.onrender.com/assets/mojo_adv.jpeg"
+      src="https://devix-backend.onrender.com/assets/mojo_adv.jpg"
       style={{ borderRadius: "0.75rem", margin: "0.75rem 0"}}/>
       <FlexBetween>
         <Typography color={main}>Mojo</Typography>
-        <Typography color={medium}>Unleash the power of Mojo – 35,000x faster than Python, perfect for AI and high-performance computing!"</Typography>
+        <Typography color={medium}>www.modular.com/mojo</Typography>
       </FlexBetween>
-      <Typography color={medium} m="0.5rem 0">Your</Typography>
+      <Typography color={medium} m="0.5rem 0">Unleash the power of Mojo – a blazing-fast programming language that outpaces Python by up to 35,000 times, making it the ultimate choice for cutting-edge AI applications and high-performance computing!</Typography>
     </WidgetWrapper>
   )
 }

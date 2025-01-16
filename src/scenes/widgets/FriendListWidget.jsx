@@ -34,9 +34,9 @@ const FriendListWidget = ({userId}) => {
         sx={{mb: "1.5rem"}}
         >Friend List</Typography>
         <Box>
-            {friends.map((friend) => (
+            {friends.map((friend, index) => (
                 <Friend 
-                    key={friend._id}
+                    key={`${friend._id}-${index}`}
                     friendId={friend._id}
                     name={`${friend.firstName} ${friend.lastName}`}
                     subtitle={friend.occupation}
