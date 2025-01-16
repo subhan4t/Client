@@ -19,11 +19,11 @@ const AdvertWidget = () => {
         width="100%"
         height="auto"
         alt="advert"
-      src="https://devix-backend.onrender.com/assets/info4.jpeg"
+      src="https://devix-backend.onrender.com/assets/mojo_adv.jpeg"
       style={{ borderRadius: "0.75rem", margin: "0.75rem 0"}}/>
       <FlexBetween>
-        <Typography color={main}>MikaCosmetics</Typography>
-        <Typography color={medium}>mikacosmetics.com</Typography>
+        <Typography color={main}>Mojo</Typography>
+        <Typography color={medium}>Unleash the power of Mojo – 35,000x faster than Python, perfect for AI and high-performance computing!"</Typography>
       </FlexBetween>
       <Typography color={medium} m="0.5rem 0">Your</Typography>
     </WidgetWrapper>
