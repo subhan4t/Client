@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../state/index";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween"
+import Loader from "../../components/Loader";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -48,6 +49,7 @@ const initialValuesLogin = {
 
 const Form = () => {
   const [pageType, setPageType] = useState("login");
+  const [loader, setLoader] = useState(false);
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,6 +58,7 @@ const Form = () => {
   const isRegister = pageType === "register";
 
   const register = async (values, onSubmitProps) => {
+    setLoader(true)
     // this allows us to send form info with image
     const formData = new FormData();
     for (let value in values) {
@@ -72,6 +75,7 @@ const Form = () => {
     );
     const savedUser = await savedUserResponse.json();
     onSubmitProps.resetForm();
+    setLoader(false);
 
     if (savedUser) {
       setPageType("login");
@@ -79,6 +83,7 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
+    setLoader(true);
     const loggedInResponse = await fetch("https://devix-backend.onrender.com/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -86,6 +91,7 @@ const Form = () => {
     });
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
+    setLoader(false);
     if (loggedIn) {
       dispatch(
         setLogin({
@@ -247,6 +253,16 @@ const Form = () => {
             >
               {isLogin ? "LOGIN" : "REGISTER"}
             </Button>
+            {loader && (
+              <Box sx={{
+                position: "absolute",
+                top: "50",
+                left: "50",
+                transform: "translate(-50%,-50%)"
+              }}>
+                <Loader />
+              </Box>
+            )}
             <Typography
               onClick={() => {
                 setPageType(isLogin ? "register" : "login");
