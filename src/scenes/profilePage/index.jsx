@@ -14,9 +14,10 @@ const ProfilePage = () => {
   const { userId } = useParams();
   const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const getUser = async () => {
-    const response = await fetch(`https://devix-backend.onrender.com/users/${userId}`, {
+    const response = await fetch(`${API_URL}users/${userId}`, {
       method: "GET",
       headers: { Authorization : `Bearer ${token}`}
     });

@@ -18,11 +18,12 @@ const Friend = ({ friendId, name, subtitle, userPicturePath}) => {
     const primaryDark = palette.primary.dark;
     const main = palette.neutral.main;
     const medium = palette.neutral.medium;
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const isFriend = friends.find((friend) => friend._id === friendId);
 
     const patchFriend = async () => {
-        const response = await fetch(`https://devix-backend.onrender.com/users/${_id}/${friendId}`, {
+        const response = await fetch(`${API_URL}users/${_id}/${friendId}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${token}`,

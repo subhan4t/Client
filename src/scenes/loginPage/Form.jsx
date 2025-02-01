@@ -56,6 +56,7 @@ const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const register = async (values, onSubmitProps) => {
     setLoader(true)
@@ -67,7 +68,7 @@ const Form = () => {
     formData.append("picturePath", values.picture.name);
 
     const savedUserResponse = await fetch(
-      "https://devix-backend.onrender.com/auth/register",
+      `${API_URL}auth/register`,
       {
         method: "POST",
         body: formData,
@@ -84,7 +85,7 @@ const Form = () => {
 
   const login = async (values, onSubmitProps) => {
     setLoader(true);
-    const loggedInResponse = await fetch("https://devix-backend.onrender.com/auth/login", {
+    const loggedInResponse = await fetch(`${API_URL}auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),

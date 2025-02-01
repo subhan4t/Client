@@ -8,6 +8,7 @@ const AdvertWidget = () => {
     const dark = palette.neutral.dark;
     const main = palette.neutral.main;
     const medium = palette.neutral.medium;
+    const API_URL = import.meta.env.VITE_API_URL;
 
   return (
     <WidgetWrapper>
@@ -19,7 +20,7 @@ const AdvertWidget = () => {
         width="100%"
         height="auto"
         alt="advert"
-      src="https://devix-backend.onrender.com/assets/mojo_adv.jpg"
+      src={`${API_URL}assets/mojo_adv.jpg`}
       style={{ borderRadius: "0.75rem", margin: "0.75rem 0"}}/>
       <FlexBetween>
         <Typography color={main}>Mojo</Typography>

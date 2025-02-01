@@ -21,13 +21,14 @@ const UserWidget = ({ userId, picturePath}) => {
     const dark = palette.neutral.dark;
     const medium = palette.neutral.medium;
     const main = palette.neutral.main;
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const getUser = async() => {
         if(!userId) {
             console.error('User Id is undefined');
             return;
         }
-        const response = await fetch(`https://devix-backend.onrender.com/users/${userId}`, {
+        const response = await fetch(`${API_URL}users/${userId}`, {
             method: "GET",
             headers: { Authorization: `Bearer ${token}`}
         });

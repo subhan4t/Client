@@ -4,8 +4,10 @@ import {
     FavoriteBorderOutlined,
     FavoriteOutlined,
     ShareOutlined,
+    DeleteOutline
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Divider, IconButton, Typography, useTheme , Menu, MenuItem} from "@mui/material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import FlexBetween from '../../components/FlexBetween';
 import WidgetWrapper from '../../components/WidgetWrapper';
 import Friend from '../../components/Friend';
@@ -26,7 +28,11 @@ const PostWidget = ({
 }) => {
 
     const [isComments, setIsComments] = useState(false);
+    const [isDeleted, setIsDeleted] = useState(false);
     const dispatch = useDispatch();
+    const [anchorE1, setAnchorE1] = useState(null);
+    const open = Boolean(anchorE1);
+    const API_URL = import.meta.env.VITE_API_URL;
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
     const isLiked = Boolean(likes[loggedInUserId]); 
@@ -39,7 +45,7 @@ const PostWidget = ({
     const primary = palette.primary.main;
 
     const patchLike = async () => {
-      const response = await fetch(`https://devix-backend.onrender.com/posts/${postId}/like`, {
+      const response = await fetch(`${API_URL}posts/${postId}/like`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -49,6 +55,36 @@ const PostWidget = ({
       });
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost}))
+    }
+
+    const deletePost = async() => {
+      try {
+        const response = await fetch(`${API_URL}posts/${postId}/delete`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        })
+
+        if(!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData || "Something went wrong")
+        }
+
+        window.location.reload()
+      } catch(error) {
+        console.error("Error deleting post: ", error);
+        alert(error.message);
+      }
+    }
+
+    const handleClick = (event) => {
+      setAnchorE1(event.currentTarget)
+    }
+
+    const handleClose = (event) => {
+      setAnchorE1(null)
     }
 
   return (
@@ -66,7 +102,7 @@ const PostWidget = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem"}}
-        src={`https://devix-backend.onrender.com/assets/${picturePath}`} />
+        src={`${API_URL}assets/${picturePath}`} />
       )}
       <FlexBetween mt="0.25rem">
         <FlexBetween gap="1rem">
@@ -89,9 +125,24 @@ const PostWidget = ({
           </FlexBetween>
         </FlexBetween>
 
-        <IconButton>
-          <ShareOutlined />
+        <IconButton onClick={handleClick}>
+          <MoreHorizIcon />
         </IconButton>
+
+        <Menu anchorEl={anchorE1} open={open} onClose={handleClose}>
+          <MenuItem onClick={handleClose}>
+            <IconButton onClick={deletePost}>
+              <DeleteOutline />
+              <Typography sx={{ paddingLeft: "0.5rem"}}>Delete</Typography>
+            </IconButton>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <IconButton>
+              <ShareOutlined />
+              <Typography sx={{ paddingLeft: "0.5rem"}}>Share</Typography>
+            </IconButton>
+          </MenuItem>
+        </Menu>
       </FlexBetween>
       {isComments && (
         <Box mt="0.5rem">
